@@ -1,0 +1,330 @@
+\documentclass[9pt,a4paper, twocolumn]{article}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{graphicx, adjustbox}
+\usepackage{lmodern}
+\usepackage{fourier}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{mhchem}
+\usepackage{multicol}
+\usepackage{soul}
+
+\usepackage{fancyhdr}
+\usepackage[paperheight=29.7cm, paperwidth=21cm,% Set the height and width of the paper
+includehead,
+includefoot,
+nomarginpar,% We don't want any margin paragraphs
+textwidth=19cm,% Set \textwidth to 10cm
+textheight=24cm, % Set height
+top=5mm,
+bottom=5mm,
+headheight=10mm,% Set \headheight to 10mm
+]{geometry}
+\pagestyle{fancy}
+
+
+%Colors
+\usepackage[dvipsnames]{xcolor}
+
+
+\definecolor{black}{RGB}{0, 0, 0}
+\definecolor{richblack}{RGB}{7, 14, 13}
+\definecolor{charcoal}{RGB}{45, 67, 77}
+\definecolor{delectricblue}{RGB}{93, 117, 131}
+\definecolor{cultured}{RGB}{245, 245, 245}
+\definecolor{lightgray}{RGB}{211, 216, 218}
+\definecolor{silversand}{RGB}{190, 194, 198}
+\definecolor{spanishgray}{RGB}{148, 150, 157}
+\definecolor{darkliver}{RGB}{64, 63, 76}
+
+\colorlet{lightdelectricblue}{delectricblue!30}
+\colorlet{lightdarkliver}{darkliver!30}
+
+
+%ColorDefines
+\newcommand{\trueblack}[1]{\textcolor{black}{#1}}
+\newcommand{\rich}[1]{\textcolor{richblack}{#1}}
+\newcommand{\lightblack}[1]{\textcolor{charcoal}{#1}}
+\newcommand{\lightrich}[1]{\textcolor{delectricblue}{#1}}
+
+
+%Boxes
+\usepackage{tcolorbox}
+\newtcolorbox{calloutbox}{center,%
+    colframe =red!0,%
+    colback=cultured,
+    title={Callout},
+    coltitle=richblack,
+    attach title to upper={\ ---\ },
+    sharpish corners,
+    enlarge by=0.5pt}
+
+\newtcolorbox[use counter=equation]{eq}{center,
+	colframe =red!0,
+	colback=cultured,
+	title={\thetcbcounter},
+	coltitle=richblack,
+	detach title,
+	after upper={\par\hfill\tcbtitle},
+	sharpish corners,
+    enlarge by=0.5pt }
+    
+\newtcolorbox{qt}{center,
+	colframe=delectricblue,
+	colback=white!0,
+	title={\large "},
+	coltitle=delectricblue,
+	attach title to upper,
+	after upper ={\large "},
+	sharp corners,
+	enlarge by=0.5pt,
+	boxrule=0pt,
+	leftrule=2pt}
+	
+\newtcolorbox{exc}{center,%
+    colframe =red!0,%
+    colback=darkliver!15,
+    title={Excercise},
+    coltitle=richblack,
+    attach title to upper={\ ---\ },
+    sharpish corners,
+    enlarge by=0.5pt}
+    
+\newcounter{theo}
+\newtcolorbox[use counter=theo]{theorem}
+	{center,%
+    colframe =red!0,%
+    colback=cultured,
+    title={Theorem \thetcbcounter},
+    coltitle=richblack,
+    attach title to upper={\ ---\ },
+    sharpish corners,
+    enlarge by=0.5pt}
+
+\newcounter{defcounting}
+\newtcolorbox[use counter=defcounting]{define}
+{center,%
+	colframe=darkliver!50,%
+	colback=white!0,
+	title={\textcolor{black}{\textbf{\textit{Definition}} \  \thetcbcounter  \ --}},
+	coltitle=darkliver!50,
+	attach title to upper,
+	after upper ={ },
+	sharp corners,
+	enlarge by=0.5pt,
+	boxrule=0pt,
+	leftrule=2pt,
+    rightrule = 0pt}
+
+\newcounter{lemmacount}
+\newtcolorbox[use counter=lemmacount]{lemma}
+{center,%
+    colframe=charcoal!50,%
+    colback=white!0,
+    title={\textcolor{black}{\textbf{\textit{Lemma}} \  \thetcbcounter  \ --}},
+    coltitle=darkliver!50,
+    attach title to upper,
+    after upper ={ },
+    sharp corners,
+    enlarge by=0.5pt,
+    boxrule=2pt}
+    
+
+\newcounter{examplecounter}
+\newtcolorbox[use counter=examplecounter]{example}
+	{center,%
+    colframe =red!0,%
+    colback=cultured,
+    title={Example},
+    coltitle=richblack,
+    attach title to upper={\ ---\ },
+    sharpish corners,
+    enlarge by=0.5pt}
+
+    
+
+        
+    
+% Highlighters
+\newcommand{\hldl}[1]{%
+	\sethlcolor{lightdarkliver}%
+	\hl{#1}
+}
+\newcommand{\hldb}[1]{%
+    \sethlcolor{lightdelectricblue}%
+    \hl{#1}%
+}
+
+
+% Images
+\newcounter{figurecounter}
+\setcounter{figurecounter}{1}
+
+\newcommand{\img}[3]{
+    \begin{figure}[h!]
+        \centering
+        \captionsetup{justification=centering,margin=0cm,labelformat=empty}
+        \includegraphics[width=#2\linewidth]{./img/#1}
+        \label{figure}
+        \caption{\small\textbf{fig-\thefigurecounter} -- \textcolor{darkliver}{#3}}
+    \end{figure}
+    \addtocounter{figurecounter}{1}}
+
+\newcommand{\imgr}[3]{
+    \begin{wrapfigure}{r}{#2\textwidth}
+        \centering
+        \captionsetup{justification=centering,margin=0cm,labelformat=empty}
+        \includegraphics[width=\linewidth]{./img/#1}
+        \label{figure}
+        \caption{\small \textbf{fig: \thefigurecounter} -- \textcolor{darkliver}{#3}}
+    \end{wrapfigure}
+    \addtocounter{figurecounter}{1}}
+
+\newcommand{\imgl}[3]{
+    \begin{wrapfigure}{l}{#2\textwidth}
+        \centering
+        \captionsetup{justification=centering,margin=0cm,labelformat=empty}
+        \includegraphics[width=\linewidth]{./img/#1}
+        \label{figure}
+        \caption{\small \textbf{fig: \thefigurecounter} -- \textcolor{darkliver}{#3}}
+    \end{wrapfigure}
+    \addtocounter{figurecounter}{1}}
+
+% New commands
+\newenvironment{callout}
+	{\begin{calloutbox}\color{charcoal}\textbf\textit}
+	{\end{calloutbox}}
+
+% for this file
+\newcommand{\newpoint}[1]{\ \\ \indent$\mathsection$ \textbf{#1}}
+\newcommand{\curveL}{\mathcal{L}}
+\newcommand{\curveA}{\mathcal{A}}
+\newcommand{\curveP}{\mathcal{P}}
+\newcommand{\thm}{\text{Thm}}
+\newcommand{\proof}{\\ \ \\ $\blacktriangleright$ \textit{proof: }}
+\newcommand{\distinct}{ \\ \hrule}
+\newcommand{\curl}{\nabla\times}
+\newcommand{\diver}{\nabla\cdot}
+\newcommand{\grad}{\nabla}
+\newcommand{\vect}[1]{\textbf{#1}}
+
+
+\title{The Problem of Black Body Radiation \\ \large \textit{Notes of The Order of Quantum Foundations} \\ 2023 University of Tehran}
+\date{\today}
+\author{Amir H. Ebrahimnezhad \\ \small \textit{University of Tehran Department of Physics.}}
+
+\parskip=12pt % adds vertical space between paragraphs
+
+%Headers and Footers
+\fancyhead{} % clear all header fields
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\fancyhead[RO,LE]{\textbf{The Problem of Black Body Radiation}}
+\fancyhead[RE,LO]{\textit{\leftmark}}
+\fancyfoot{} % clear all footer fields
+\fancyfoot[LE,RO]{\thepage}
+\begin{document}
+    \maketitle
+    \section*{Preface}
+    \section{Physics Before Quantum (A Brief Mentioning)}
+        As a starting point to our discussion, let us remark some of the important challenges in physics until the 19th century, the first of which, we could imagine started from Newtons Law of Motion and Gravitations, developed in the late 17th century. The theory of mechanics established by Newton were implemented in more phenomenas such as rigid bodies and fluids, by Euler and Lagrange.
+        \\
+        \\
+        Ever since the mechanics was introduced as a discipline, through which we could understand the motion of the particles, it seemed that the only job left was to use the principles of Newtons motion and gravitation to describe the nature's more complex systems; Although it is good to note that some tried to add more principles into the theory such as Minimum Stress by Gauss and Hamilton Principle of Least action, where the latter became more successful than the former.
+        \\
+        \\
+        At around the early eigteenth century, by the development of Thermometers (Gabriel Daniel Fahrenheit), The temperature of a body became a quantitative aspect. A later discovery by Robert Mayer and James Prescott Joule showed that the heat corresponds to the energy, which lead to The first law of Thermodynamics by the development of principle of conservation of force by Hermann von Helmholtz. The second law of Thermodynamics developed earlier by Sadi Carnot, Other contribution later would result in the dynamical theory of heat. These developments would later become the foundations of thermodynamics.
+        \\
+        \\
+        Another greate theoretical acievement of the physics before quantum mechanics was Electrodynamics. The first quantitative analysis of these phenomenas was done by Charles Auguste de Coulomb (1736-1806). The new theory of electrodynamics revolutionized our understanding of electric and magnetic phenomena, which were previously thought to have separate origins. This period of significant scientific and technical advancements in electrodynamics was greatly influenced by the work of Michael Faraday and James Clerk Maxwell. Faraday, known for his groundbreaking experiments, made important discoveries such as electromagnetic rotation, electromagnetic induction, and the unification of various types of electricity. His contributions laid the foundation for Maxwell to develop the mathematical language of electrodynamics and build upon Faraday's ideas. Maxwell's work further advanced our understanding of electric and magnetic fields, leading to the development of electrodynamic theory.
+
+    \section{Early Quantum Theories}
+        \subsection{New Problems, New Assumptions}
+            There are some significant observations that led to what we know today as quantum mechanics. Although these expermients were obviously contradicting classical assumptions and other assumed properties of nature, they weren't the main reason of adapting to the quantum mechanics which was itself contradicting many common-sense ideas. In this talk we would focus on the problem of Black Body Radiation. Mainly the Journey of Max Plank to the Quantization of Energy
+            \newpoint{A Brief Calculation of Radiation and Energy Density:}  Consider radiation in an enclosure whose walls are at a uniform temperature $T$, and think how to calculate the energy received by a small patch of area $dA$ on the inner walls of the enclosure. At a point within the enclosure at a distance $r$ from this patch, the patch subtends a solid angle $dA\cos\theta/r^2$, where $\theta$ is the angle between the line of sight from the point to the patch and the normal to the patch.. Hence a fraction $dA\cos\theta/4\pi r^2$ of the radiation at this point is aimed at the patch. In a time $t$ all the radiation at a distance $r<ct$ that is aimed at the patch will hit it, so the total rate would be:
+            \begin{equation}
+                \Gamma(\nu, T) = \frac{1}{tdA d\nu} \int_0^{ct}2\pi r^2 dr\int_0^{\pi/2} \sin\theta d\theta \frac{dA\cos\theta}{4\pi r^2}\epsilon (\nu, T) d\nu 
+            \end{equation}
+            which results in:
+            \begin{align*}
+                = \frac c4 \epsilon(\nu, T)
+            \end{align*}
+            Here we have to note that $\epsilon(\nu, T)d\nu$ is the energy per volume of radiation with frequency between $\nu$ and $\nu + \nu$ in an enclosure with walls at uniform temperature $T$. In order for the system to be in equilibrium, the rate per area of emission of radiation energy in a frequency interval $d\nu$ must equal the rate per area of absorption of radiation energy in that frequency interval, which is $(c/4)f(\nu, T)\epsilon(\nu, T)d\nu$ where $f(\nu, T)\leq 1$ is a fraction of energy of radiation of frequency $\nu$ that is absorbed when it hits the wall of the enclosure. The emission is evidently greatest for black walls since the absorb all the frequencies given to them, so that $f(\nu, T) = 1$.
+            \\
+            \\
+            \newpoint{Electromagnetic Degrees of Freedom:} Since the deepest understanding of the radiation at the beginning of twentieth century was based on Maxwell's equations:
+            \begin{align}
+                \curl \vect B - \frac1c \frac{\partial \vect E}{\partial t} &= \frac{4\pi}{c}\vect J \\
+                \diver \vect E &= 4\pi\rho\\
+                \curl \vec Et + \frac1c\frac{\partial \vect B}{\partial t} &= 0 \\
+                \diver \vect B &= 0
+            \end{align}
+            Now $\vect J(\vect x, t)$ and $\rho$ are current and charge density. When there is none of them, the solutions of these equations are of the form:
+            \begin{equation}
+                \vect E(\vect x, t) = \vect e \exp(i\vect k \cdot \vect x - i\omega t) + c.c
+            \end{equation}
+            \begin{equation}
+                \vect B(\vect x, t) = \vect b \exp(i\vect k \cdot \vect x - i\omega t) + c.c
+            \end{equation}
+            Now we want to calculate energy in a finite volume $V$. We take the shape of $V$ to be a cube with length $L = V^{1/3}$.
+            \begin{callout}
+                Notice that $\epsilon$ is universal and the shape of our enclosure wouldn't matter for computing it.
+            \end{callout}
+            \begin{callout}
+                Also note that there's a restriction on the constants we have because the equations are coupled. We got these relations between them:
+                \begin{align*}
+                    \vect k\times\vect b + \frac\omega c \vect e = 0\\
+                    \vect k\cdot\vect e = 0\\
+                    \vect k\times\vect e - \frac\omega c \vect b = 0 \\
+                    \vect k \cdot \vect b = 0
+                \end{align*}
+            \end{callout}
+            Whatever boundary conditions the material of the enclosure imposes on the phases of the waves, it must be the same on opposite sides of the cube, so the phase $\vect k \cdot \vect x$ can only change by an integer multiple of $2\pi$ when $x_i$ is shifted by $L$. That is, the wave number $\vect k$ and frequency $\omega$ must take the form:
+            \begin{equation}
+                \vect k_{\vect n} = (2\pi/L)\vect n, \ \ \omega_{\vect n} = c |\vect k_{\vect n}|
+            \end{equation}
+            Therefore the general electric and magnetic fields in the enclosure are:
+            \begin{align}
+                \vect E(\vect x, t) &= \sum_n \vect e(\vect n) \exp(i\vect k_{\vect n}\cdot \vect x - i\omega_{\vect n}t) + c.c.\\
+                \vect B(\vect x,t) &= \sum_n \left(\frac c{\omega_n}\right)\left[\vect k\times \vect e(\vect n)\right]\exp(i\vect k_{\vect n}\cdot \vect x - i\omega_{\vect n} t) + c.c.
+            \end{align}
+            Now it is well known that one would have to calculate the energy density in radiation as $(\vect E^2 + \vect B^2)/8\pi$. Notice that the $e^{(\vect k_n - \vect k_m)\cdot \vect x}$ acts like a kroneker delta function. therefore:
+            \begin{align*}
+                \frac 1V \int_V d^3x \vect E^2(\vect x , t) &= \sum_n \vect e(\vect n) \cdot \vect e(\vect -n) e^{-2i\omega_{\vect n}t}\\
+                & + \sum_n \vect e*(\vect n)\cdot \vect e*(-\vect n)e^{+2i\omega_{\vect n}t}\\
+                & + 2\sum_n \vect e(\vect n)\cdot \vect e*(\vect n)\\
+                \frac1V\int_V d^3x\vect B^2(\vect x, t) &= \sum_n \left( \frac c{\omega_n}\right)^2 (\vect k_{\vect n}\times \vect e(\vect n))\cdot (-\vect k_{\vect n}\times\vect e(-\vect n))e^{-2i\omega_{\vect n}t}\\
+                & + \sum_n \left( \frac c{\omega_n}\right)^2(\vect k_{\vect n } \times \vect e*(\vect n))\cdot (-\vect k_{\vect n }\times \vect e*(-\vect n))e^{+2i\omega_n t}\\
+                &+2 \sum_n \left( \frac c{\omega_n}\right)^2(\vect k_{\vect n}\times\vect e(\vect n))\cdot(\vect k_{\vect n}\times \vect e*(\vect n))
+            \end{align*}
+            Noting that $\vect k\cdot \vect e = \vect k\cdot \vect e' = 0$ we get: $(\vect k\times \vect e)\cdot(\vect k\times \vect e') = \vect k^2 \vect e\cdot vect e'$ and since $\omega_{\vect n} = c^2 \vect k^2_n$ the total energy would become:
+            \begin{equation}
+                \frac{1}{8\pi}\int_V d^3x \left[\vect E^2(\vect x) + \vect B^2(\vect x)\right] = \frac{V}{2\pi}\sum_n \vect e(\vect n)\cdot\vect e*(\vect n)
+            \end{equation} 
+            There are two independent components of each $\vect e(\vect n)$ orthogonal to $\vect n$, each with independent real and imaginary terms, all four quantities for each $\vect n$ contributing independently to $E$, so there are four degrees of freedom for each $\vect n$. Assuming that the box is so big that the frequencies are very close together one can change the summation with an integral. Therefore one would find the total energy density per frequency interval:
+            \begin{equation}
+                \epsilon(\nu, T) = \frac{8\pi}{c^3}\nu^2\bar E(\nu, T)
+            \end{equation}
+            \newpoint{The Rayleigh-Jeans Distribution:} In 1900 a calculation along these lines was presented by John William Strutt (1842-1919), better known as Lord Rayleigh. Using the result of classical thermodynamic, for systems whose total energy can be expressed as a sum over degrees of freedom of squared amplitudes, He found the mean total energy given polarization and wave vector as $\bar E = kT$. Thus:
+            \begin{equation}
+                \epsilon(\nu, T) = \frac{8\pi kT}{c^3}\nu^2
+            \end{equation}
+            Now obviously the energy per-volume per-frequency should be integrated over space and frequencies to get the total energy, which would be:
+            \begin{equation}
+                E = \frac{8\pi kTV}{c^3}\int_0^\infty \nu^2d\nu
+            \end{equation}
+            This is the result that became known as the ultraviolet catastrophe.
+
+
+
+
+\end{document}
