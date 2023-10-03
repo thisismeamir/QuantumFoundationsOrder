@@ -1,7 +1,0 @@
-\contentsline {section}{\numberline {1}Physics Before Quantum (A Brief Mentioning)}{1}{}%
-\contentsline {section}{\numberline {2}Radiation And Energy Density}{2}{}%
-\contentsline {section}{\numberline {3}The Black Body Radiation}{3}{}%
-\contentsline {subsection}{\numberline {3.1}The First Paper of Max Planck}{4}{}%
-\contentsline {subsection}{\numberline {3.2}The Second Paper of Max Planck}{6}{}%
-\contentsline {subsection}{\numberline {3.3}The Last Paper of Planck}{7}{}%
-\contentsline {section}{\numberline {4}Conclusion}{9}{}%

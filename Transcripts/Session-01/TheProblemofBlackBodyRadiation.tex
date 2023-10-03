@@ -1,0 +1,674 @@
+\documentclass[9pt,a4paper, twocolumn]{article}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{graphicx, adjustbox}
+\usepackage{lmodern}
+\usepackage{fourier}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{mhchem}
+\usepackage{multicol}
+\usepackage{soul}
+
+\usepackage{fancyhdr}
+\usepackage[paperheight=29.7cm, paperwidth=21cm,% Set the height and width of the paper
+includehead,
+includefoot,
+nomarginpar,% We don't want any margin paragraphs
+textwidth=19cm,% Set \textwidth to 10cm
+textheight=24cm, % Set height
+top=5mm,
+bottom=5mm,
+headheight=10mm,% Set \headheight to 10mm
+]{geometry}
+\pagestyle{fancy}
+
+
+%Colors
+\usepackage[dvipsnames]{xcolor}
+
+
+\definecolor{black}{RGB}{0, 0, 0}
+\definecolor{richblack}{RGB}{7, 14, 13}
+\definecolor{charcoal}{RGB}{45, 67, 77}
+\definecolor{delectricblue}{RGB}{93, 117, 131}
+\definecolor{cultured}{RGB}{245, 245, 245}
+\definecolor{lightgray}{RGB}{211, 216, 218}
+\definecolor{silversand}{RGB}{190, 194, 198}
+\definecolor{spanishgray}{RGB}{148, 150, 157}
+\definecolor{darkliver}{RGB}{64, 63, 76}
+
+\colorlet{lightdelectricblue}{delectricblue!30}
+\colorlet{lightdarkliver}{darkliver!30}
+
+
+%ColorDefines
+\newcommand{\trueblack}[1]{\textcolor{black}{#1}}
+\newcommand{\rich}[1]{\textcolor{richblack}{#1}}
+\newcommand{\lightblack}[1]{\textcolor{charcoal}{#1}}
+\newcommand{\lightrich}[1]{\textcolor{delectricblue}{#1}}
+
+
+%Boxes
+\usepackage{tcolorbox}
+\newtcolorbox{calloutbox}{center,%
+    colframe =red!0,%
+    colback=cultured,
+    title={Callout},
+    coltitle=richblack,
+    attach title to upper={\ ---\ },
+    sharpish corners,
+    enlarge by=0.5pt}
+
+\newtcolorbox[use counter=equation]{eq}{center,
+	colframe =red!0,
+	colback=cultured,
+	title={\thetcbcounter},
+	coltitle=richblack,
+	detach title,
+	after upper={\par\hfill\tcbtitle},
+	sharpish corners,
+    enlarge by=0.5pt }
+    
+\newtcolorbox{qt}{center,
+	colframe=delectricblue,
+	colback=white!0,
+	title={\large "},
+	coltitle=delectricblue,
+	attach title to upper,
+	after upper ={\large "},
+	sharp corners,
+	enlarge by=0.5pt,
+	boxrule=0pt,
+	leftrule=2pt}
+	
+\newtcolorbox{exc}{center,%
+    colframe =red!0,%
+    colback=darkliver!15,
+    title={Excercise},
+    coltitle=richblack,
+    attach title to upper={\ ---\ },
+    sharpish corners,
+    enlarge by=0.5pt}
+    
+\newcounter{theo}
+\newtcolorbox[use counter=theo]{theorem}
+	{center,%
+    colframe =red!0,%
+    colback=cultured,
+    title={Theorem \thetcbcounter},
+    coltitle=richblack,
+    attach title to upper={\ ---\ },
+    sharpish corners,
+    enlarge by=0.5pt}
+
+\newcounter{defcounting}
+\newtcolorbox[use counter=defcounting]{define}
+{center,%
+	colframe=darkliver!50,%
+	colback=white!0,
+	title={\textcolor{black}{\textbf{\textit{Definition}} \  \thetcbcounter  \ --}},
+	coltitle=darkliver!50,
+	attach title to upper,
+	after upper ={ },
+	sharp corners,
+	enlarge by=0.5pt,
+	boxrule=0pt,
+	leftrule=2pt,
+    rightrule = 0pt}
+
+\newcounter{lemmacount}
+\newtcolorbox[use counter=lemmacount]{lemma}
+{center,%
+    colframe=charcoal!50,%
+    colback=white!0,
+    title={\textcolor{black}{\textbf{\textit{Lemma}} \  \thetcbcounter  \ --}},
+    coltitle=darkliver!50,
+    attach title to upper,
+    after upper ={ },
+    sharp corners,
+    enlarge by=0.5pt,
+    boxrule=2pt}
+    
+
+\newcounter{examplecounter}
+\newtcolorbox[use counter=examplecounter]{example}
+	{center,%
+    colframe =red!0,%
+    colback=cultured,
+    title={Example},
+    coltitle=richblack,
+    attach title to upper={\ ---\ },
+    sharpish corners,
+    enlarge by=0.5pt}
+
+    
+
+        
+    
+% Highlighters
+\newcommand{\hldl}[1]{%
+	\sethlcolor{lightdarkliver}%
+	\hl{#1}
+}
+\newcommand{\hldb}[1]{%
+    \sethlcolor{lightdelectricblue}%
+    \hl{#1}%
+}
+
+
+% Images
+\newcounter{figurecounter}
+\setcounter{figurecounter}{1}
+
+\newcommand{\img}[3]{
+    \begin{figure}[h!]
+        \centering
+        \captionsetup{justification=centering,margin=0cm,labelformat=empty}
+        \includegraphics[width=#2\linewidth]{#1}
+        \label{figure}
+        \caption{\small\textbf{fig-\thefigurecounter} -- \textcolor{darkliver}{#3}}
+    \end{figure}
+    \addtocounter{figurecounter}{1}}
+
+\newcommand{\imgr}[3]{
+    \begin{wrapfigure}{r}{#2\textwidth}
+        \centering
+        \captionsetup{justification=centering,margin=0cm,labelformat=empty}
+        \includegraphics[width=\linewidth]{./img/#1}
+        \label{figure}
+        \caption{\small \textbf{fig: \thefigurecounter} -- \textcolor{darkliver}{#3}}
+    \end{wrapfigure}
+    \addtocounter{figurecounter}{1}}
+
+\newcommand{\imgl}[3]{
+    \begin{wrapfigure}{l}{#2\textwidth}
+        \centering
+        \captionsetup{justification=centering,margin=0cm,labelformat=empty}
+        \includegraphics[width=\linewidth]{./img/#1}
+        \label{figure}
+        \caption{\small \textbf{fig: \thefigurecounter} -- \textcolor{darkliver}{#3}}
+    \end{wrapfigure}
+    \addtocounter{figurecounter}{1}}
+
+% New commands
+\newenvironment{callout}
+	{\begin{calloutbox}\color{charcoal}\textbf\textit}
+	{\end{calloutbox}}
+
+% for this file
+\newcommand{\newpoint}[1]{\ \\ \indent$\mathsection$ \textbf{#1}}
+\newcommand{\curveL}{\mathcal{L}}
+\newcommand{\curveA}{\mathcal{A}}
+\newcommand{\curveP}{\mathcal{P}}
+\newcommand{\thm}{\text{Thm}}
+\newcommand{\proof}{\\ \ \\ $\blacktriangleright$ \textit{proof: }}
+\newcommand{\distinct}{ \\ \hrule}
+\newcommand{\curl}{\nabla\times}
+\newcommand{\diver}{\nabla\cdot}
+\newcommand{\grad}{\nabla}
+\newcommand{\vect}[1]{\textbf{#1}}
+
+
+\title{The Problem of Black Body Radiation \\ \large \textit{Notes of The Order of Quantum Foundations} \\ 2023 University of Tehran}
+\date{\today}
+\author{Amir H. Ebrahimnezhad \\ \small \textit{University of Tehran Department of Physics.}}
+
+\parskip=12pt % adds vertical space between paragraphs
+
+%Headers and Footers
+\fancyhead{} % clear all header fields
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\fancyhead[RO,LE]{\textbf{The Problem of Black Body Radiation}}
+\fancyhead[RE,LO]{\textit{\leftmark}}
+\fancyfoot{} % clear all footer fields
+\fancyfoot[LE,RO]{\thepage}
+\begin{document}
+    \maketitle
+    \tableofcontents
+    \section{Physics Before Quantum (A Brief Mentioning)}
+        As a starting point to our discussion, let us remark some of the important challenges in physics until the 19th century, the first of which, we could imagine started from Newtons Law of Motion and Gravitations, developed in the late 17th century. The theory of mechanics established by Newton were implemented in more phenomenas such as rigid bodies and fluids, by Euler and Lagrange.
+        \\
+        \\
+        Ever since the mechanics was introduced as a discipline, through which we could understand the motion of the particles, it seemed that the only job left was to use the principles of Newtons motion and gravitation to describe the nature's more complex systems; Although it is good to note that some tried to add more principles into the theory such as Minimum Stress by Gauss and Hamilton Principle of Least action, where the latter became more successful than the former.
+        \\
+        \\
+        At around the early eigteenth century, by the development of Thermometers (Gabriel Daniel Fahrenheit), The temperature of a body became a quantitative aspect. A later discovery by Robert Mayer and James Prescott Joule showed that the heat corresponds to the energy, which lead to The first law of Thermodynamics by the development of principle of conservation of force by Hermann von Helmholtz. The second law of Thermodynamics developed earlier by Sadi Carnot, Other contribution later would result in the dynamical theory of heat. These developments would later become the foundations of thermodynamics.
+        \\
+        \\
+        Another greate theoretical acievement of the physics before quantum mechanics was Electrodynamics. The first quantitative analysis of these phenomenas was done by Charles Auguste de Coulomb (1736-1806). The new theory of electrodynamics revolutionized our understanding of electric and magnetic phenomena, which were previously thought to have separate origins. This period of significant scientific and technical advancements in electrodynamics was greatly influenced by the work of Michael Faraday and James Clerk Maxwell. Faraday, known for his groundbreaking experiments, made important discoveries such as electromagnetic rotation, electromagnetic induction, and the unification of various types of electricity. His contributions laid the foundation for Maxwell to develop the mathematical language of electrodynamics and build upon Faraday's ideas. Maxwell's work further advanced our understanding of electric and magnetic fields, leading to the development of electrodynamic theory.
+        \\
+        \\
+        However there was some problems raising in 1890, we can point out to five important problem that classical physics couldn't yet solve.\
+        \begin{enumerate}
+            \item  The null result of Michelson-Morley experiment- the aether and the propagation of light.
+            \item The ambiguous status of the kinetic theory of gases as propounded by Clausius, Maxwell and Boltzmann.
+            \item The origin of the spectral lines in atomic and molecular spectra and Balmer's formula.
+            \item The origin of the photoelectric effect.
+            \item The spectrum of black-body radiation.
+        \end{enumerate}
+    \section{Radiation And Energy Density}
+        There are some significant observations that led to what we know today as quantum mechanics. Although these expermients were obviously contradicting classical assumptions and other assumed properties of nature, they weren't the main reason of adapting to the quantum mechanics which was itself contradicting many common-sense ideas. In this talk we would focus on the problem of Black Body Radiation. Mainly the Journey of Max Planck to the Quantization of Energy.
+        \newpoint{A Brief Calculation of Radiation and Energy Density:}  Consider radiation in an enclosure whose walls are at a uniform temperature $T$, and think how to calculate the energy received by a small patch of area $dA$ on the inner walls of the enclosure. At a point within the enclosure at a distance $r$ from this patch, the patch subtends a solid angle $dA\cos\theta/r^2$, where $\theta$ is the angle between the line of sight from the point to the patch and the normal to the patch.. Hence a fraction $dA\cos\theta/4\pi r^2$ of the radiation at this point is aimed at the patch. In a time $t$ all the radiation at a distance $r<ct$ that is aimed at the patch will hit it, so the total rate would be:
+        \begin{equation}
+            \Gamma(\nu, T) = \frac{1}{tdA d\nu} \int_0^{ct}2\pi r^2 dr\int_0^{\pi/2} \sin\theta d\theta \frac{dA\cos\theta}{4\pi r^2}\epsilon (\nu, T) d\nu 
+        \end{equation}
+        which results in:
+        \begin{align*}
+            = \frac c4 \epsilon(\nu, T)
+        \end{align*}
+        Here we have to note that $\epsilon(\nu, T)d\nu$ is the energy per volume of radiation with frequency between $\nu$ and $\nu + \nu$ in an enclosure with walls at uniform temperature $T$. In order for the system to be in equilibrium, the rate per area of emission of radiation energy in a frequency interval $d\nu$ must equal the rate per area of absorption of radiation energy in that frequency interval, which is $(c/4)f(\nu, T)\epsilon(\nu, T)d\nu$ where $f(\nu, T)\leq 1$ is a fraction of energy of radiation of frequency $\nu$ that is absorbed when it hits the wall of the enclosure. The emission is evidently greatest for black walls since the absorb all the frequencies given to them, so that $f(\nu, T) = 1$.
+        \\
+        \\
+        \newpoint{Electromagnetic Degrees of Freedom:} Since the deepest understanding of the radiation at the beginning of twentieth century was based on Maxwell's equations:
+        \begin{align}
+            \curl \vect B - \frac1c \frac{\partial \vect E}{\partial t} &= \frac{4\pi}{c}\vect J \\
+            \diver \vect E &= 4\pi\rho\\
+            \curl \vec Et + \frac1c\frac{\partial \vect B}{\partial t} &= 0 \\
+            \diver \vect B &= 0
+        \end{align}
+        Now $\vect J(\vect x, t)$ and $\rho$ are current and charge density. When there is none of them, the solutions of these equations are of the form:
+        \begin{equation}
+            \vect E(\vect x, t) = \vect e \exp(i\vect k \cdot \vect x - i\omega t) + c.c
+        \end{equation}
+        \begin{equation}
+            \vect B(\vect x, t) = \vect b \exp(i\vect k \cdot \vect x - i\omega t) + c.c
+        \end{equation}
+        Now we want to calculate energy in a finite volume $V$. We take the shape of $V$ to be a cube with length $L = V^{1/3}$.
+        \begin{callout}
+            Notice that $\epsilon$ is universal and the shape of our enclosure wouldn't matter for computing it.
+        \end{callout}
+        \begin{callout}
+            Also note that there's a restriction on the constants we have because the equations are coupled. We got these relations between them:
+            \begin{align*}
+                \vect k\times\vect b + \frac\omega c \vect e = 0\\
+                \vect k\cdot\vect e = 0\\
+                \vect k\times\vect e - \frac\omega c \vect b = 0 \\
+                \vect k \cdot \vect b = 0
+            \end{align*}
+        \end{callout}
+        Whatever boundary conditions the material of the enclosure imposes on the phases of the waves, it must be the same on opposite sides of the cube, so the phase $\vect k \cdot \vect x$ can only change by an integer multiple of $2\pi$ when $x_i$ is shifted by $L$. That is, the wave number $\vect k$ and frequency $\omega$ must take the form:
+        \begin{equation}
+            \vect k_{\vect n} = (2\pi/L)\vect n, \ \ \omega_{\vect n} = c |\vect k_{\vect n}|
+        \end{equation}
+        Therefore the general electric and magnetic fields in the enclosure are:
+        \begin{align}
+            \vect E(\vect x, t) &= \sum_n \vect e(\vect n) \exp(i\vect k_{\vect n}\cdot \vect x - i\omega_{\vect n}t) + c.c.\\
+            \vect B(\vect x,t) &= \sum_n \left(\frac c{\omega_n}\right)\left[\vect k\times \vect e(\vect n)\right]\exp(i\vect k_{\vect n}\cdot \vect x - i\omega_{\vect n} t) + c.c.
+        \end{align}
+        Now it is well known that one would have to calculate the energy density in radiation as $(\vect E^2 + \vect B^2)/8\pi$. Notice that the $e^{(\vect k_n - \vect k_m)\cdot \vect x}$ acts like a kroneker delta function. therefore:
+        \begin{align*}
+            \frac 1V \int_V d^3x \vect E^2(\vect x , t) &= \sum_n \vect e(\vect n) \cdot \vect e(\vect -n) e^{-2i\omega_{\vect n}t}\\
+            & + \sum_n \vect e*(\vect n)\cdot \vect e*(-\vect n)e^{+2i\omega_{\vect n}t}\\
+            & + 2\sum_n \vect e(\vect n)\cdot \vect e*(\vect n)\\
+            \frac1V\int_V d^3x\vect B^2(\vect x, t) &= \sum_n \left( \frac c{\omega_n}\right)^2 (\vect k_{\vect n}\times \vect e(\vect n))\cdot (-\vect k_{\vect n}\times\vect e(-\vect n))e^{-2i\omega_{\vect n}t}\\
+            & + \sum_n \left( \frac c{\omega_n}\right)^2(\vect k_{\vect n } \times \vect e*(\vect n))\cdot (-\vect k_{\vect n }\times \vect e*(-\vect n))e^{+2i\omega_n t}\\
+            &+2 \sum_n \left( \frac c{\omega_n}\right)^2(\vect k_{\vect n}\times\vect e(\vect n))\cdot(\vect k_{\vect n}\times \vect e*(\vect n))
+        \end{align*}
+        Noting that $\vect k\cdot \vect e = \vect k\cdot \vect e' = 0$ we get: $(\vect k\times \vect e)\cdot(\vect k\times \vect e') = \vect k^2 \vect e\cdot vect e'$ and since $\omega_{\vect n} = c^2 \vect k^2_n$ the total energy would become:
+        \begin{equation}
+            \frac{1}{8\pi}\int_V d^3x \left[\vect E^2(\vect x) + \vect B^2(\vect x)\right] = \frac{V}{2\pi}\sum_n \vect e(\vect n)\cdot\vect e*(\vect n)
+        \end{equation} 
+        There are two independent components of each $\vect e(\vect n)$ orthogonal to $\vect n$, each with independent real and imaginary terms, all four quantities for each $\vect n$ contributing independently to $E$, so there are four degrees of freedom for each $\vect n$. Assuming that the box is so big that the frequencies are very close together one can change the summation with an integral. Therefore one would find the total energy density per frequency interval:
+        \begin{equation}
+            \epsilon(\nu, T) = \frac{8\pi}{c^3}\nu^2\bar E(\nu, T)
+        \end{equation}
+        \newpage
+        \newpoint{The Rayleigh-Jeans Distribution:} In 1900 a calculation along these lines was presented by John William Strutt (1842-1919), better known as Lord Rayleigh. Using the result of classical thermodynamic, for systems whose total energy can be expressed as a sum over degrees of freedom of squared amplitudes, He found the mean total energy given polarization and wave vector as $\bar E = kT$. Thus:
+        \begin{equation}
+            \epsilon(\nu, T) = \frac{8\pi kT}{c^3}\nu^2
+        \end{equation}
+        Now obviously the energy per-volume per-frequency should be integrated over space and frequencies to get the total energy, which would be:
+        \begin{equation}
+            E = \frac{8\pi kTV}{c^3}\int_0^\infty \nu^2d\nu
+        \end{equation}
+        This is the result that became known as the ultraviolet catastrophe.
+    \section{The Black Body Radiation}
+        \newpoint{Key points before Planck Function:} The Stefan-Boltzmann law is a fundamental principle in physics that describes the relationship between the temperature of an object and the amount of radiation it emits. It states that the total radiant energy emitted per unit surface area of a black body is directly proportional to the fourth power of its absolute temperature. Mathematically, the law is expressed as $E = \sigma T^4$, where $E$ represents the radiant energy emitted, $\sigma$ is the Stefan-Boltzmann constant, and $T$ is the absolute temperature of the object. This law has wide-ranging applications in various fields, including astrophysics, where it helps determine the luminosity and temperature of stars, and in climate science, where it plays a crucial role in understanding the Earth's energy balance. The Stefan-Boltzmann law provides a fundamental understanding of how thermal radiation is related to temperature and has greatly contributed to our understanding of the behavior of objects at high temperatures.
+        \\
+        \\
+        The discovery of the Stefan-Boltzmann law can be traced back to the experiments conducted by John Tyndall at the Royal Institution in London. Tyndall studied the intensity of radiation emitted by a platinum strip heated to different temperatures. Through his experiments, he observed that the radiant energy emitted per second per unit area by the hot body was proportional to its temperature. However, it was Josef Stefan who later provided empirical evidence for this relationship and formulated it as a law. Stefan's experiments confirmed that the radiant energy ($I$) is directly proportional to the temperature ($T$), expressed as $I \propto T$.
+        \\
+        \\
+        In 1884, Ludwig Boltzmann, a renowned physicist, deduced the Stefan-Boltzmann law from the thermodynamics of a cavity filled with radiation and maintained at a temperature $T$. Boltzmann's theoretical analysis provided a deeper understanding of the relationship between temperature and radiant energy. As a result, the law became known as the Stefan-Boltzmann law, acknowledging the contributions of both Stefan and Boltzmann.
+        \\
+        \\
+        To validate the Stefan-Boltzmann law experimentally, further measurements were conducted by Lummer and Pringsheim in 1897. Their meticulous experiments confirmed the accuracy of the law with high precision. Lummer and Pringsheim's careful measurements provided strong evidence supporting the relationship between radiant energy and temperature as described by the Stefan-Boltzmann law.
+        \img{LummerExperiment.jpeg}{1}{A is a vessel kept at 100C by being immersed in boiling water. B is immersed in a bath of nitre and its temperature could be varied between 200 C and 600 C. Above that temperature an iron cylinder was heated to 1300 C by a gas furnace. G was a Lummer-Kurlbaum bolometer. To measure the spectrum of the radiation, the radiation from B was passed first through a fluor-spar prism and the spectral energy distribution measured by a linear bolometer.}
+        \newpoint{The Classical Nature of Stefan-Boltzmann Law:} The Stefan-Boltzmann law, despite its quantum implications, was initially derived using classical thermodynamics and the principles of electromagnetic radiation. Ludwig Boltzmann's derivation of the law was entirely classical, based on the thermodynamics of electromagnetic radiation. He utilized the relation between temperature, pressure, and energy density to establish the law. Boltzmann's derivation relied on the classical thermodynamic equation:
+
+        \begin{equation}
+            T\frac{\partial p}{\partial T}|_V = \frac{\partial U}{\partial V}|_T + p
+        \end{equation}
+        
+        where $p$ represents pressure, $U$ is the internal energy, and $V$ denotes volume. By considering the relation between pressure and energy density for electromagnetic radiation, which can be derived from Maxwell's equations, Boltzmann found that $p = \frac{1}{3}\epsilon$, where $\epsilon$ represents the energy density. Substituting this result into the thermodynamic equation and using the relationship $U = V\epsilon$, we arrive at the conclusion that $\epsilon \propto I \propto T^4$. It is important to note that this classical derivation does not explicitly consider the spectrum of the radiation.
+        \\
+        \\    
+        The classical nature of the Stefan-Boltzmann law is evident in Boltzmann's derivation, which solely relies on classical thermodynamics and the principles of electromagnetic radiation. By considering the relationship between temperature, pressure, and energy density, Boltzmann was able to establish the law without explicitly considering the spectrum of the radiation. This classical derivation highlights the foundational role of classical thermodynamics and classical electromagnetism in understanding the Stefan-Boltzmann law. However, it is worth noting that the law's implications extend beyond classical physics, as it also holds true in the realm of quantum mechanics, where the quantization of energy levels becomes significant. The Stefan-Boltzmann law serves as a bridge between classical and quantum physics, providing a fundamental understanding of the relationship between temperature and the emission of radiation.
+        \subsection{The First Paper of Max Planck}
+            \newpoint{Wien's Displacement Law:} The first paper by Planck on this matter was presented at a meeting at physical socitey of Berlin  (19 October 1900) in a contribution entitled \textit{"On an improvement of the Wien spectral equation"}. The spectrum of black-body radiation was poorly known, but Wien used theoretical arguments to derive its general form. He needed two key results:
+            \begin{itemize}
+            \item From the Stefan-Boltzmann law, the change in the radiation energy density in an adiabatic expansion is $\epsilon \propto V^{-4/3}$ and so $T \propto r^{-1}$.
+            \item In such an adiabatic expansion, the wavelength increases precisely proportional to the size of the enclosure, $\lambda \propto r$.
+            \end{itemize}
+            Wien considered what happens to the black-body energy density in the wavelength interval $\lambda$ to $\lambda + d\lambda$, $\epsilon(\lambda)d\lambda$, when it is expanded adiabatically. By combining these key results, Wien was able to derive the general form of the black-body radiation spectrum. His theoretical arguments and careful considerations of adiabatic expansions provided valuable insights into the behavior of black-body radiation and laid the foundation for further advancements in the understanding of thermal radiation.
+            \\
+            \\
+            By definition, in an adiabatic expansion, the equilibrium radiation spectrum must end up as an equilibrium spectrum at the lower temperature. Therefore, according to the Stefan-Boltzmann law:
+            \begin{equation}
+                \frac{u(\lambda_1)d\lambda_1}{u(\lambda_2)d\lambda_2} = \frac{T_1^4}{T_2^4}
+            \end{equation}
+            But, $\lambda_1T_1 = \lambda_2T_2$ and so $d\lambda_1 =(T_2/T_1)d\lambda_2$ Therefore, 
+            \begin{equation}
+                \frac{u(\lambda_1)}{T_1^5} = \frac{u(\lambda_2)}{T_2^5} ,  \ \ u(\lambda) T^{-5} = \text{constant}
+            \end{equation}
+            But $\lambda T = \text{constant}$, thus:
+            \begin{equation}
+                u(\lambda)\lambda^5 = \text{constant}
+            \end{equation}
+            Now, the equilibrium spectrum can only depend on $T$ and $\lambda$ and we know that $\lambda T = \text{constant}$. Therefore, the spectrum of the radiation can only have the form:
+            \begin{equation}
+                u(\lambda)\lambda^5 = f(\lambda T)
+            \end{equation}
+            We will need the expression for black-body radiation in frequency form and so we write:
+            \begin{equation}
+                u(\lambda)d\lambda = u(\nu)d\nu
+            \end{equation}
+            since $\lambda = c/\nu$ and $d\lambda = -cd\nu/\nu^2$ we get:
+            \begin{equation}
+                \boxed{u(\nu)d\nu = \nu^3 f(\frac{\nu}{T})d\nu}
+            \end{equation}
+            \begin{callout}
+                This really is rather clever. Notice how far Wien was able to get, without knowing anything about the actual form of the spectrum. This was all new when Max Planck began his studies of the spectrum of black-body radiation
+            \end{callout}
+            \newpoint{Max Planck and Black-Body Radiation:} Planck's early scientific career was primarily focused on studying the second law of thermodynamics, with a particular emphasis on the concept of entropy and its application to problems of physical and chemical equilibrium. His initial published papers already demonstrated the key characteristics of his later work. On one hand, he meticulously developed his theories and performed calculations that could be directly compared to experimental data. On the other hand, he placed great importance on providing clear definitions for fundamental concepts.
+            \\
+            \\
+            Influenced by the writings of Rudolf Clausius, Planck aimed to establish the "principle of the increase of entropy" in thermodynamics as a fundamental law, similar in significance to the conservation of energy. He recognized the crucial role of irreversible processes in nature, such as heat conduction, which cannot be completely reversed. This led to a disagreement between Planck and Wilhelm Ostwald, as well as the proponents of "energetics." At the Lübeck Assembly of Natural Scientists in 1895, where Ostwald and Georg Helm defended the views of the energeticists, Planck sided with Boltzmann in opposing them.
+            \\
+            \\
+            However, unlike Boltzmann, who argued against energetics based on the molecular hypothesis and the kinetic theory of matter, Planck used thermodynamic reasoning to critique Ostwald's concept of "volume energy." Planck approached the molecular hypothesis with caution and, in a paper titled "Gegen die neuere Energetik" ("Against the New Energetics"), he stated that he did not intend to advocate for the mechanistic view of nature at that point. He believed that extensive and challenging investigations were necessary to fully address this aspect.
+            \\
+            \\
+            In his early scientific career, Max Planck focused on studying the second law of thermodynamics and its application to problems of physical and chemical equilibrium. He was particularly interested in the concept of entropy and its relevance to heat radiation and phase transitions. Planck's research was influenced by discussions with his colleagues in Berlin, such as Willy Wien and Heinrich Rubens, who were actively working on related problems.
+            \\
+            \\
+            Planck's attention was drawn to the theorem of Kirchhoff, which stated that in an evacuated cavity with reflecting walls and arbitrary emitting and absorbing bodies, a state would be established over time where all bodies reach the same temperature and the properties of radiation inside the cavity depend solely on temperature. This concept of a "normal energy distribution" fascinated Planck, as he believed that the pursuit of absolute knowledge was the most beautiful task of research.
+            \\
+            \\
+            Although Planck was aware of Wien's law, which accurately described existing observations, he sought a more systematic derivation of the equation with fewer assumptions. He presented his first paper on electromagnetic radiation properties in 1895, focusing on the absorption and emission processes of radiation by resonators. He continued investigating resonating systems and the damping effect, which he believed played a fundamental role in explaining irreversible processes.
+            \\
+            \\
+            In a series of contributions between 1897 and 1899, Planck attempted to prove the existence of irreversibility in radiation processes. He introduced the concept of "natural radiation" and demonstrated that radiation processes following its properties necessarily proceed in an irreversible manner. By invoking this hypothesis, Planck established a relation between the energy of resonators and the intensity of radiation, defined the entropy of radiation, and derived the law of blackbody radiation.
+            \\
+            \\
+            Within a span of three years, Planck successfully connected thermodynamic and electrodynamic theories by incorporating irreversible processes in the treatment of radiation and resonators. However, this achievement came at the cost of introducing the assumption of "natural radiation," which characterized the energy distribution of electromagnetic rays as completely irregular among individual partial vibrations.
+            \\
+            \\
+            Planck acknowledged that the hypothesis of natural radiation implied the second law of thermodynamics when applied to radiation processes. Although his initial goal of deriving the second law solely from electrodynamics without additional assumptions was not achieved, the hypothesis of natural radiation allowed him to define entropy as a function of time and establish the electromagnetic definition of temperature and thermal equilibrium. The law of spectral energy distribution derived by Wien was found to be identical to Planck's law, which was substantiated by experimental investigations conducted by F. Paschen, O. Lummer, and E. Pringsheim.
+            \begin{qt}
+                The study of conservative damping seems to me to be of great importance, since it opens up the prospect of a possible general explanation of irreversible processes by means of conservative forces.
+            \end{qt}
+            \newpoint{Properties of Black Body Radiation:} Given the black body radiation intensity as a function of temperature and frequencies we got:
+            \begin{equation}
+                I(T) = \int I(\lambda, T) d\lambda
+            \end{equation}
+            Using this one can find the energy density and flux, both integrated as:
+            \begin{align}
+                u(T) = \int u(\lambda, T)d\lambda &= \int \frac{4\pi}{c}I(\lambda, T)d\lambda = \frac{4\pi}{c}I(T)\\
+                F(T) = \int F(\lambda, T)d\lambda &= \int \pi I(\lambda, T)d\lambda = \pi I(T) = \frac c4 u(T)
+            \end{align}
+            According to Kirchhoff, the characteristics of black body radiation can be examined by observing the radiation that comes out of a small opening in the wall of a black body cavity. Stefan's experiments in 1879 demonstrated that the overall emitted flux can be expressed in the following manner:
+            \begin{equation}
+                F(T) = \sigma T^4
+            \end{equation}
+            where $\sigma$ is the Stefan-Boltzmann constant, from which we derive the energy density as:
+            \begin{equation}
+                u(T) = \frac{4\sigma / c}T^4 = aT^4
+            \end{equation}
+            The latter form was established theoretically by Boltzmann (1884) on the basis of Thermodynamics. Using for the pressure of radiation the relation:
+            \begin{equation}
+                P(T) = \frac13 u(T)
+            \end{equation}
+            as indicated by the electromagnetic theory of Maxwell (1873), and assuming that radiation obeyed the known laws of thermodynamics, then putting $U=uV$:
+            \begin{equation}
+                dQ = TdS = d(uV) + PdV = (u+P)dV + Vdu
+            \end{equation}
+            from which it follows that:
+            \begin{equation}
+                (\partial/\partial u)_V [(u+P)/T] = (\partial/\partial V)_u [V/T]
+            \end{equation}
+            Which using the equation [27] would become:
+            \begin{equation}
+                (T/u)\left(\frac{\partial u}{\partial T}\right)_V = \left(\frac{\partial \ln u}{\partial \ln T}\right)_V = 4
+            \end{equation}
+            Thus $u = aT^4$ and $P=\frac13 aT^4$. in agreement with Stefan's results. From here one can derive the Entropy as:
+            \begin{equation}
+                S = \frac43 aT^3V
+            \end{equation}
+            \newpoint{Planck Procedure:} The Black-Body radiation law was derived through the following steps: Initially, a relationship was established between $U_\nu$, which represents the average energy of a resonator with frequency $\nu$, and $\rho_\nu$, the energy of the incident radiation with the same frequency. This allowed for the derivation of the equation from electrodynamics.
+            \begin{equation}
+                U_\nu =\frac{c^3}{8\pi\nu^2}\rho_\nu
+            \end{equation}
+            Then he defined the entropy of the resonator:
+            \begin{equation}
+                S = -\frac{U_\nu}{a\nu} \ln \frac{U_\nu}{b\nu}
+            \end{equation}
+            And the entropy of a ray of radiation of frequency $\nu$ in a given direction as:
+            \begin{equation}
+                S = -\left(\frac{K_\nu}{a\nu}\ln\frac{c^2K_\nu}{b\nu}+\frac{K'_\nu}{a\nu}\ln\frac{c^2K'_\nu}{b\nu}\right)
+            \end{equation}
+            Finally, by taking the maximum of the total entropy, he gathered a relation between the resonator energy and ray intensity in the state of equilibrium, 
+            \begin{equation}
+                U_\nu = \frac{c}{\nu^2}K_\nu
+            \end{equation}
+            And thus:
+            \begin{equation}
+                \frac1T = \frac{dS}{dU_\nu} = -\frac{1}{a\nu}\ln\frac{U_\nu}{b\nu} = \frac1{a\nu}\ln\frac{b\nu^3}{c^2K_\nu}
+            \end{equation}
+            Thus with equation [32] and [36] Planck derived a relation for energy density of ration of frequency $\nu$, namely:
+            \begin{equation}
+                \rho_\nu = \frac{8\pi b\nu^3}{c^3}\exp(-\frac{a\nu}{T})
+            \end{equation}
+            \begin{callout}
+                Note that Wien had assumed that blackbody radiation was emitted by molecules obeying Maxwell's velocity distribution; Further he assumed that $\lambda$, the wavelength of radiation emitted by a moelcule, wa a function only of its velocity $v$ and vice versa. Thus he'd obtained a result that would later be in approvement by Plancks.
+                \begin{equation}
+                    \rho_\lambda = F(\lambda)\exp(-\frac{f(\lambda)}{T})
+                \end{equation}
+            \end{callout}
+            He had meanwhile convinced himself that \textit{The Law of The Increase of Entropy} does not suffice to determine the expression of the entropy as a function of energy:
+            \begin{qt}
+                The energy distribution law is according to this theory determined as soon as the entropy S ofa linear resonator which interacts with the radiation is known as function of the vibrational energy $U$. I have, however, already in my last paper on this subjectl stated that the law of increase of entropy is by itself not yet suffcient to determine this function completely;
+            \end{qt}
+            Thus he lood for another method of defining the entropies and he did so by a direct calculation of the radiation entropy: He wrote down an expansion for the quantity $dS$, expressing the change of the total entropy of the system, in the vicinity of the equilibtrium sityation:
+
+            \begin{qt}
+                my view that Wien's law would be of general validity, was brought about rather by special considerations, namely by the evaluation Of an infinitesimal increase of the entropy of a system of $n$ identical resonators in a stationary radiation field by two different methods which led to the equation:
+            \end{qt}
+            \begin{equation}
+                dU_n\Delta U_n f(U_n) = ndU \Delta U f(U)
+            \end{equation}
+            where $U_n = nU$ and $f(U) = -\frac35\frac{d^2S}{dU^2}$, then Wien's law follows in the form:
+            \begin{equation}
+                \frac{d^2S}{dU^2} = \frac{\text{const.}}{U}
+            \end{equation}
+            \begin{qt}
+                which must simply add up. However, I could consider the possibility, even if it would not be easily understandable and in any case would be diffcult to prove, that the expression on the left-hand side would not have the general meaning which I attributed to it earlier, in other words: that the values of $U_n$, $dU_n$ and $\Delta U_n$ are not by themselves suficient to determine the change of entropy under consideration, but that $U$ itself must also be known for Following this suggestion I have finally started to construct completely arbitrary expressions for the entropy which although they are more complicated than Wien's expression still seem to satisfy just as completely all requirements of the thermodynamic and electromagnetic theory.
+            \end{qt}
+            Subsequently, he directs his attention towards one of the constructed expressions that particularly captivates him. This expression, which is almost as straightforward as Wien's expression, warrants further investigation due to the inadequacy of Wien's expression in accounting for all observations. The derived expression is obtained by substituting:
+            \begin{equation}
+                \frac{d^2S}{dU^2} = \frac{\alpha}{U(\beta+U)}
+            \end{equation}
+            Planck believed that the simplest expression leading to $S$ as a logarithmic function of $U$ was necessary to fulfill the requirement for $S$ in logarithmic form. This requirement was motivated by probability considerations. Additionally, this function would also converge to Wien's expression when $U$ takes small values. By using:
+            \begin{equation}
+                \frac{dS}{dU}=\frac1T
+            \end{equation}
+            and Wien's "displacement" law, one gets a radiation formula with two constants:
+            \begin{equation}
+                \boxed{
+                    E = \frac{C\lambda^{-5}}{e^{c/\lambda T}-1}
+                }
+            \end{equation}
+            According to Planck, the new formula he proposed, from the perspective of the electromagnetic theory of radiation, appears to fit the currently available observational data as satisfactorily as the best equations proposed for the spectrum, such as those by Thiesen, Lummer-Jahnke, and Lummer-Pringsheim. Planck supported this claim with numerical examples. He believed that this new formula, apart from Wien's expression, is the simplest possible and wanted to bring attention to it.
+        \subsection{The Second Paper of Max Planck}
+            In his second paper, Planck begins addressing the formula he previously introduced. He mentions that the usefulness of this equation is not solely based on the agreement between the communicated numbers and experimental data at that time. Rather, it is primarily due to the simplicity of the formula's structure and its ability to provide a straightforward logarithmic expression for the relationship between the entropy of an irradiated monochromatic vibrating resonator and its vibrational energy. Planck notes that this formula holds the potential for a general interpretation, unlike other proposed equations, including Wien's formula, which has not been confirmed by experiment. 
+            \\
+            \\
+            He aims to offer a concise elucidation of the fundamental principles of the theory. He asserts that the most straightforward approach to achieve this is by presenting a novel and elementary method that allows for the determination of energy distribution across the various colors of the normal spectrum using a single fundamental constant of nature. Furthermore, he states that this method would also enable the determination of the temperature of the energy radiation using a second fundamental constant of nature.
+            \\
+            \\
+            \newpoint{Core of the Theory as Planck Mentions:} Here I will put Placnk exact explanation so that there wouldn't be any misunderstandings $\rightarrow$ Let us consider a large number of monochromatically vibrating resonators, which are at large distances apart and are enclosed in a diathermic medium with light velocity $c$ and bounded by reflecting walls. Let the system contain a certain amount of energy, the total energy $E_\tau$ which is present partly in the medium as travelling radiation and partly in the resonators as vibrational energy. The question is how in a stationary stater this energy is distributed over the vibrarions of the resonatiors and over the various colours of the radiation present in the medium, and what will be the temperature of the total system. 
+            \\
+            \\
+            To answer this question consider the vibrations of the resonators and assign to them arbitrarily defninte energies: The sum:
+            \begin{equation}
+                E+E'+E'' +\dots = E_0
+            \end{equation}
+            cleatly is less than the total sum and $E_\tau -E_0$ would be the radiation present in the medium. 
+            \\
+            \\
+            Here planck would bring his Million dollar idea, quote:
+            \begin{qt}
+                We must now give the distribution of the energy over the separate resonators of each group, first of all the distribution of the energy $E$ over the $N$ resonators of frequency $\nu$. \textbf{If $E$ is considered to be continuously divisible quantity, this distribution is possible in infinitely many ways. We consider,--and this is the most importatn point of the entire calculation-- however $E$ to be composed of a very definite number of equal parts and use thereto the constant of nature $h = 6.55\times 10^{-27} \text{erg sec}$}
+            \end{qt}
+            This constant multiplied by the common frequency would give us the energy element $\epsilon$. He then calculate the number of complexions for the distribution  of the energy $E$ amond the $N$ resonators of frequency $\nu$. Further, heconsidered the cavity to contain also resonators of different frequencies. Evidently, the number of complexions denoting the possibilities of the distribution of discrete energy elements, among the resonators was identical with the product $\textbf{R}\cdot \textbf{R}'\cdot\textbf{R}''\dots$ In case of thermal equilibrium, a temperature could be defined through the equation:
+            \begin{equation}
+                \frac1T = l\frac{d\ln \textbf{R}_0}{dE_0}
+            \end{equation}
+            Where $\textbf{R}_0$ is the maximum value of the number of complexions. It would, to be sure, be very complicated to perform explicitly the above-mentioned calculations, although it would not be without some interest to test the truth of the attainable degree of approximation ins a simple case. A mor egeneral calcualtion which is performed very simply using the above prescriptions shows much more directly that the normal energy distribution determined in this way for a medium containing radiation is given by the expression:
+            \begin{equation}
+                u_\nu d\nu = \frac{8\pi\nu^3}{c^3}\frac{d\nu}{e^{h\nu/kT}-1}
+            \end{equation}
+            which corresponds to the spectral formula which planck described earlier:
+            \begin{equation}
+                E_\lambda d\lambda = \frac{c_1\lambda^{-5}}{e^{c_2/\lambda\theta}}d\lambda
+            \end{equation}
+            the number of possible complexions for the velocities of the atoms and the number of possible complexions for the radiation energy distribution. Therefore, the entropy of the total system, including both the atoms and the radiation, can be expressed as the logarithm of the product of these two numbers.
+            \\
+            \\
+            This consequence of the theory provides an opportunity to test its reliability. By comparing the calculated entropy of a system with radiating resonators present to the entropy predicted by Boltzmann's formula for a monatomic gas in equilibrium, one can assess the validity of the theory. If the theory holds true, the calculated entropy should be proportional to the logarithm of the total number of possible complexions, consistent with the electromagnetic theory of radiation.
+            \\
+            \\
+            This connection between the entropy of the system and the number of possible complexions, as derived from the theory, reinforces the fundamental principles of the theory. It demonstrates the independence of the velocities of the atoms from the distribution of radiation energy, supporting the electromagnetic theory of radiation. This conclusion further strengthens the reliability and applicability of the theory in explaining the behavior of systems with radiating resonators.
+        \subsection{The Last Paper of Planck}
+            In his last papet Planck would do calculations that he missed in his last two papers, as he already mention in the previous one.
+            \\
+            \\
+            \newpoint{Calculations of The Entropy of a Resonator as a Function of its energy:} Entropy is determined by the level of disorder, which is influenced by the irregularity in the changing amplitude and phase of monochromatic vibrations of a resonator in a stationary radiation field. This irregularity is observed over time intervals that are larger than the duration of one vibration but smaller than the duration of a measurement. If the amplitude and phase of the vibrations remained constant, indicating complete homogeneity, there would be no entropy and the vibrational energy could be fully converted into work. The energy $U$ of a single stationary vibrating resonator is therefore considered as a time average or a simultaneous average of the energies of a large number $N$ of identical resonators in the same stationary radiation field. These resonators are sufficiently separated from each other to avoid direct influence. This average energy $U$ of a single resonator is what we refer to, and it contributes to the total energy.
+            \begin{equation}
+                U_N = NU
+            \end{equation}
+            of such a system of $N$ resonators there corresponds a certain total entrpy:
+            \begin{equation}
+                S_N = NS
+            \end{equation}
+            of the same system, where $S$ represents the average entropy of a single resonator and the entropy $S_N$ depends on the disorder with which the total energy $U_N$ is distributed among the individual resonators.
+            \\
+            \\
+            Now we set the entropy $S_N$ of the system proportional to the logarithm of its probability $W$, wihtin an arbitrary additive constant, so that the $N$ resonators together have the energy $E_N$:
+            \begin{equation}
+                S_N = k\log W+\text{const.}
+            \end{equation}
+            In planck's opinion this actually serves as a definition for the probability $W$, since in the basic assumptions of electromagnetic theory there is no definite evidence for such a probability. Now it is only the matter of finding $W$ that is remaining. Then, it is necessary to consider $U_N$ not as a continous, infinitely divisible quantity, but as a discrete quantity composed of an integral number of finite equal parts.
+            \begin{equation}
+                U_N = P\epsilon
+            \end{equation}
+            here $P$ is generally a large number and the value of $\epsilon$ is yet to be dicussed. Any distribution of the $P$ energy elements among the $N$ resonators can reuslt only in a definite number; We call every such form a complex, therefore as an example a possible composition would be:
+            \begin{equation}
+                \begin{matrix}
+                    1 &2 &3&4&5&6&7&8&9&10\\
+                    7 &30&11&8&9&2&20&4&4&5
+                \end{matrix}
+            \end{equation}
+            Here we have $N=10, P=100$, thus the number of all possible complexes, $R$, would be the number of possible arrangements to get $P=100$. Then he came up with such combinator:
+            \begin{equation}
+                R = \frac{N(N+1)(N+2)\dots(N+P+1)}{1\cdot 2\cdot 3\cdot \dots\cdot P } = \frac{(N+P-1)!}{(N-1)!P!}
+            \end{equation}
+            Now by Stirling's Theorem, we have in the first approximation:
+            $$
+            N! = N^N
+            $$
+            Then the first approximation of $R$ would be:
+            \begin{equation}
+                R=\frac{(N+P)^{N+P}}{N^N\cdot P^P}
+            \end{equation}
+            Our hypothesis, which forms the basis for further calculations, states that in order for the $N$ resonators to collectively possess the vibrational energy $UN$, the probability $W$ must be proportional to the number $R$ of all possible complexes formed by distributing the energy $UN$ among the $N$ resonators. In simpler terms, any given complex is equally likely as any other. The confirmation of this hypothesis in nature can only be proven through experience. If experience ultimately supports this hypothesis, we can draw further conclusions about the specific nature of resonator vibrations, particularly in relation to J. v. Kries' interpretation of "original amplitudes" that are comparable in magnitude but independent of each other. However, at this point, it seems premature to pursue further development along these lines.
+            \\
+            \\
+            Based on the hypothesis introduced in relation to equation [50], the entropy of the system of resonators being considered can be determined by accounting for the additive constant.
+            $$
+                S_N = k\cdot\log R
+            $$
+            \begin{equation}
+                =k\cdot\left[(N+P)\log(N+P)- N\log N - P\log P\right]
+            \end{equation}
+            now by considering equations [51], [48] we got:
+            \begin{equation}
+                S_N = kN\cdot\left\{
+                    \left(1+\frac U\epsilon\right)\log\left(1+\frac U\epsilon\right) - \left(\frac U\epsilon\right)\log\left(\frac U\epsilon\right)
+                \right\}
+            \end{equation}
+            Therefore, the entropy $S$ of a resonator as a function of its energy $U$ is given by:
+            \begin{equation}
+                S= k\cdot\left\{
+                    \left(1+\frac U\epsilon\right)\log\left(1+\frac U\epsilon\right) - \left(\frac U\epsilon\right)\log\left(\frac U\epsilon\right)
+                \right\}
+            \end{equation}
+            \newpoint{Wien's Displacement Law and the Entropy:} After developing the entropy Planck uses the entropy of one resonator in equation [42]: 
+            \begin{align}
+                \frac 1T &=\frac{dS}{dU}\\
+                \frac{dS}{dU} &= \frac1{nu}\cdot f\left(\frac U\nu\right)\\
+            \end{align}
+            and integrate:
+            \begin{equation}
+                S = f\left(\frac U\nu\right)
+            \end{equation}
+            If we apply this displacement law in the latter form to equation [57] we find that the energy element $\epsilon$ must be proportional to the frequency $\nu$, thus:
+            \begin{equation}
+                \epsilon = h\nu
+            \end{equation}
+            thus:
+            \begin{equation}
+                S= k\cdot\left\{
+                    \left(1+\frac U{h\nu}\right)\log\left(1+\frac U{h\nu}\right) - \left(\frac U{h\nu}\right)\log\left(\frac U{h\nu}\right)
+                \right\}
+            \end{equation}
+            By substituting this into equation [58]:
+            \begin{align}
+                \frac1T &= \frac{k}{h\nu}\log\left(1+\frac {h\nu}{U}\right)\\
+                U &= \frac{h\nu}{\exp(h\nu/kT) - 1}
+            \end{align}
+            and since:
+            $$
+            u = \frac{8pn^2}{c^3}U\cdot f\left(\frac{T}{\nu}\right)
+            $$
+            we get:
+            \begin{equation}
+                \boxed{u = \frac{8\pi h\nu^3}{c^3}\cdot \frac{1}{e^{h\nu/kT}- 1}}
+            \end{equation}
+            or interms of wavelength:
+            \begin{equation}
+                \boxed{
+                    E = \frac{8\pi ch}{\lambda^5}\cdot \frac{1}{e^{ch/k\lambda T}-1}
+                }
+            \end{equation}
+    \section{Conclusion}
+        In this note we investigated the thought process and historical background of the development of Max Planck's Black-Body Radiation formula. The derivation of this formula took less than a year. Considering the background and history, it was evident (even for Planck himself), that the quantization of energy was a strange thing to do, which would later be used by Albert Einstein to describe the photoelectric effect; Another problem unsolved by classical prespective of nature.
+
+
+
+
+\bibliography{sources}{}
+\bibliographystyle{plain}
+\nocite {*}
+
+\end{document}
